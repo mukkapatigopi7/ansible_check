@@ -41,3 +41,6 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
+      - name: run playbook
+        run: |
+          ansible-playbook ansible/hello-world.yaml
