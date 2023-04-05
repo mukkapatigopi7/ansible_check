@@ -14,7 +14,7 @@ on:
         default: 'us-east-1'
         type: string
 jobs:
-  provision-ec2:
+  destroy-ec2:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
