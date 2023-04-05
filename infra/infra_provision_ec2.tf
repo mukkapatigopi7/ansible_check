@@ -62,7 +62,6 @@ resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
   key_name      = "anisble_key"
-  count = 2  
   network_interface {
   network_interface_id = aws_network_interface.NI1_SUBNET1_VPC1_TF1.id
   device_index         = 0
