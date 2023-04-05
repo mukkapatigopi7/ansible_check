@@ -54,11 +54,11 @@ jobs:
           echo "changed permission"
           ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
           echo "host configure"
-          ssh -i /home/runner/.ssh/id_rsa.pem ec2-user@13.232.182.219
+         # ssh -i /home/runner/.ssh/id_rsa.pem ec2-user@13.232.182.219
       - name: Run ansible script
         shell: bash 
         run: |
           service ssh status
           #cd infrastructure/ansible
           #cat setup-prod.yml
-          ansible-playbook -u ${{secrets.ANSIBLE_DEPLOY_USER}} -vvv --private-key /home/runner/.ssh/id_rsa.pem -i inventory msg.yaml
+          ansible-playbook -u ec2-user -vvv --private-key /home/runner/.ssh/id_rsa.pem -i ansible/inventory.txt ansible/helloworld.yaml
