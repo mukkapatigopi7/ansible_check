@@ -51,7 +51,7 @@ jobs:
       - name: Ansible Playbook Host:EC2Instace
         run: |
           mkdir -p /home/runner/.ssh/
-          touch /home/runner/.ssh/id_rsa.pem
+          touch /home/runner/.ssh/id_rsa
           echo -e "${{secrets.SSH_KEY}}" > /home/runner/.ssh/id_rsa.pem
           chmod 600 /home/runner/.ssh/id_rsa.pem
           echo "changed permission"
