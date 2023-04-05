@@ -11,7 +11,7 @@ on:
       region:
         description: Region
         required: true
-        default: 'us-east-2'
+        default: 'us-east-1'
         type: string
 jobs:
   provision-ec2:
@@ -36,7 +36,7 @@ jobs:
         id:   destroy
         env:
           TF_VAR_ec2_name:  "${{ github.event.inputs.ec2-name }}"
-          BUCKET_NAME: gopi-ceq-tfstate-bucke
+          BUCKET_NAME: gopi-ceq-tfstate-bucket
           TF_VAR_STATE_FILE: backup.tfstate
           
         run: |
