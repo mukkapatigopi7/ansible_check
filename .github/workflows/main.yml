@@ -44,7 +44,8 @@ jobs:
       - name: Ansible playbook Host:Localhost
         run: |
           ansible --version
-          ansible-playbook ansible/helloworld.yaml
+          ansible all -m ping
+          #ansible-playbook ansible/helloworld.yaml
       - name: Ansible Playbook Host:EC2Instace
         run: |
           mkdir -p /home/runner/.ssh/
