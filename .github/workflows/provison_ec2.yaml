@@ -40,11 +40,13 @@ jobs:
           terraform validate
           terraform plan 
           terraform apply -auto-approve
+          terraform output Instance_IP
       - name: Save TF Output
         shell: bash
-        id: ipadress
-        run: terraform output > ip.txt
+        run: terraform output | sed "s/Instance_IP = //g"
         
                  
-      - run: echo "IP=$(cat ip.txt)" >> $GITHUB_OUTPUT 
+#       - run: |
+          
+#           echo "IP=$(cat ip.txt)" >> $GITHUB_OUTPUT 
      
