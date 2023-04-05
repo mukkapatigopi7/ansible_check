@@ -41,5 +41,5 @@ jobs:
           terraform plan 
           terraform apply -auto-approve
           echo "IP=$(terraform output Instance_IP)" >> $GITHUB_OUTPUT
-          echo "${{ steps.apply.outputs.IP }} > ansible/inventory.txt
+          echo ${{ steps.apply.outputs.IP }} > ansible/inventory.txt
           
