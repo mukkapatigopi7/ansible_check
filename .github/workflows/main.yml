@@ -3,10 +3,10 @@ name: Ansible Check
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -25,7 +25,7 @@ jobs:
         with:
           args: "ansible" # my ansible files in a folder
   install_ansible:
-    # The type of runner that the job will run on
+  # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # The anisble_lint_validate Job need to be sucessfull
     needs: [ ansible_lint_validate ]
@@ -41,7 +41,24 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           if [ -f test-requirements.txt ]; then pip install -r test-requirements.txt; fi
-      - name: Run Ansible playbook on Localhost
+      - name: Ansible playbook Host:Localhost
         run: |
           ansible --version
           ansible-playbook ansible/helloworld.yaml
+      - name: Ansible Playbook Host:EC2Instace
+        run: |
+          mkdir -p /home/runner/.ssh/
+          touch /home/runner/.ssh/id_rsa
+          echo -e "${{secrets.SSH_KEY}}" > /home/runner/.ssh/id_rsa.pem
+          chmod 600 /home/runner/.ssh/id_rsa.pem
+          echo "changed permission"
+          ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
+          echo "host configure"
+          ssh -i /home/runner/.ssh/id_rsa.pem ec2-user@13.232.182.219
+      - name: Run ansible script
+        shell: bash 
+        run: |
+          service ssh status
+          #cd infrastructure/ansible
+          #cat setup-prod.yml
+          ansible-playbook -u ${{secrets.ANSIBLE_DEPLOY_USER}} -vvv --private-key /home/runner/.ssh/id_rsa.pem -i inventory msg.yaml
