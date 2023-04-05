@@ -42,8 +42,7 @@ jobs:
           terraform apply -auto-approve
           terraform output Instance_IP
       - name: Save TF Output
-        shell: bash
-        run: terraform output | sed "s/Instance_IP = //g"
+        run: terraform output Instance_IP
         
                  
 #       - run: |
