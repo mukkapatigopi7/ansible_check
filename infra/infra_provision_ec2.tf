@@ -66,11 +66,11 @@ resource "aws_instance" "app_server" {
   network_interface_id = aws_network_interface.NI1_SUBNET1_VPC1_TF1.id
   device_index         = 0
   }
-
+ 
   credit_specification {
     cpu_credits = "unlimited"
   }
-
+  
   tags = {
     Name = var.ec2_name
     Owner= "gopi.mukkapati@cloudeq.com"
@@ -81,5 +81,10 @@ resource "aws_instance" "app_server" {
     Owner= "gopi.mukkapati@cloudeq.com"
     Purpose = "Assaignment"
   }
+}
+
+ output "Instance_IP" {
+  description = "Instance IP"
+  value = aws_instance.app_server.public_ip
 }
 
