@@ -28,7 +28,7 @@ jobs:
         with:
           terraform_wrapper: false
       - name: Terraform Apply
-        id:   apply
+        id: apply
         env:
           TF_VAR_ec2_name:  "${{ github.event.inputs.ec2-name }}"
           BUCKET_NAME: gopi-ceq-tfstate-bucket
@@ -40,12 +40,10 @@ jobs:
           terraform validate
           terraform plan 
           terraform apply -auto-approve
-          terraform output Instance_IP
-      - name: Save TF Output
-        run: terraform output Instance_IP
+          echo "IP=$(terraform output Instance_IP)" >> $GITHUB_OUTPUT
+#       - name: Save TF Output
+#         run: terraform output Instance_IP
         
                  
-#       - run: |
-          
-#           echo "IP=$(cat ip.txt)" >> $GITHUB_OUTPUT 
+      - run: echo "${{ steps.apply.outputs.IP }}" 
      
