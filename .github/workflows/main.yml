@@ -56,8 +56,7 @@ jobs:
           chmod 600 /home/runner/.ssh/id_rsa.pem
           echo "changed permission"
           ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
-          echo "host configure"
-          ssh -tt -i /home/runner/.ssh/id_rsa.pem ec2-user@107.20.29.148
+          
       - name: Run ansible script
         shell: bash 
         run: |
