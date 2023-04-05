@@ -64,3 +64,5 @@ jobs:
           #cd infrastructure/ansible
           #cat setup-prod.yml
           ansible-playbook -u ec2-user -vvv --private-key /home/runner/.ssh/id_rsa.pem -i ansible/inventory.txt ansible/helloworld.yaml
+        env:
+          ANSIBLE_HOST_KEY_CHECKING: False
