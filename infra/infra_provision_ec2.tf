@@ -19,7 +19,7 @@ data "aws_ami" "ubuntu" {
 }
 
 provider "aws" {
-  region  = "us-east-2"
+  region  = "us-east-1"
 }
 
 
@@ -37,7 +37,7 @@ resource "aws_vpc" "VPC1_TF1" {
 resource "aws_subnet" "SUBNET1_VPC1_TF1" {
   vpc_id            = aws_vpc.VPC1_TF1.id
   cidr_block        = "10.10.1.0/24"
-  availability_zone = "us-east-2a"
+  availability_zone = "us-east-1a"
 
   tags = {
     Name = "SUBNET1_VPC1_TF1"
@@ -61,8 +61,8 @@ resource "aws_network_interface" "NI1_SUBNET1_VPC1_TF1" {
 resource "aws_instance" "app_server" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t3.micro"
-  key_name      = "gopi-ceq-gh-ssh-key"
-    
+  key_name      = "anisble_key"
+  count = 2  
   network_interface {
   network_interface_id = aws_network_interface.NI1_SUBNET1_VPC1_TF1.id
   device_index         = 0
