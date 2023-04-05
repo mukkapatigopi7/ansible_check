@@ -45,7 +45,7 @@ jobs:
         run: |
           ansible --version
           #ansible all -i inventory.txt -m ping
-          #ansible-playbook ansible/helloworld.yaml
+          ansible-playbook ansible/helloworld.yaml
         env:
           ANSIBLE_HOST_KEY_CHECKING: False
       - name: Ansible Playbook Host:EC2Instace
@@ -55,13 +55,13 @@ jobs:
           echo -e "${{secrets.SSH_KEY}}" > /home/runner/.ssh/id_rsa.pem
           chmod 600 /home/runner/.ssh/id_rsa.pem
           echo "changed permission"
-          #ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
+          ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
           echo "host configure"
-          ssh -i /home/runner/.ssh/id_rsa.pem ec2-user@107.20.29.148
+          ssh -tt -i /home/runner/.ssh/id_rsa.pem ec2-user@107.20.29.148
       - name: Run ansible script
         shell: bash 
         run: |
           service ssh status
           #cd infrastructure/ansible
           #cat setup-prod.yml
-          #ansible-playbook -u ec2-user -vvv --private-key /home/runner/.ssh/id_rsa.pem -i ansible/inventory.txt ansible/helloworld.yaml
+          ansible-playbook -u ec2-user -vvv --private-key /home/runner/.ssh/id_rsa.pem -i ansible/inventory.txt ansible/helloworld.yaml
