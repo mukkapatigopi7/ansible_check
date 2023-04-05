@@ -43,8 +43,7 @@ jobs:
       - name: Save TF Output
         shell: bash
         id: ipadress
-        run: |
-          terraform output Instance_IP > ipaddress
+        run: terraform output Instance_IP > ipaddress
           echo "IP=$(cat ipaddress)" >> $GITHUB_OUTPUT       
       - run: echo "${{ steps.ipadress.outputs.IP }}"
      
