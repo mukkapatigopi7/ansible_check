@@ -42,7 +42,7 @@ jobs:
           terraform apply -auto-approve
           echo "IP=$(terraform output Instance_IP)" >> $GITHUB_OUTPUT
           echo ${{ steps.apply.outputs.IP }} > $GITHUB_WORKSPACE/ansible/inventory.txt
-          cat $GITHUB_WORKSPACE/ansible/inventory.txt
+          echo "$(cat $GITHUB_WORKSPACE/ansible/inventory.txt)"
       
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
