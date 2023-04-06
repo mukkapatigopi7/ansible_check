@@ -42,7 +42,7 @@ jobs:
           terraform apply -auto-approve
           echo "IP=$(terraform output Instance_IP)" >> $GITHUB_OUTPUT
           echo ${{ steps.apply.outputs.IP }} > $GITHUB_WORKSPACE/ansible/inventory.txt
-          echo "$(cat $GITHUB_WORKSPACE/ansible/inventory.txt)"
+          cat $GITHUB_WORKSPACE/ansible/inventory.txt | echo 
       
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
@@ -57,7 +57,7 @@ jobs:
       - name: Ansible playbook Host:Localhost
         run: |
           ansible --version
-          #ansible all -i inventory.txt -m ping
+          ansible all -i ansible/inventory.txt -m ping
           ansible-playbook ansible/helloworld.yaml
         env:
           ANSIBLE_HOST_KEY_CHECKING: False
@@ -68,7 +68,6 @@ jobs:
           echo -e "${{secrets.SSH_KEY}}" > /home/runner/.ssh/id_rsa.pem
           chmod 600 /home/runner/.ssh/id_rsa.pem
           echo "changed permission"
-          #ssh-keyscan -t rsa,dsa,ecdsa,ed25519 ${{secrets.SSH_HOST}} >> /home/runner/.ssh/known_hosts
           
       - name: Run ansible script
         run: |
