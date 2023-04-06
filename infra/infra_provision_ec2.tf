@@ -46,16 +46,16 @@ resource "aws_subnet" "SUBNET1_VPC1_TF1" {
   }
 }
 
-resource "aws_network_interface" "NI1_SUBNET1_VPC1_TF1" {
-  subnet_id   = aws_subnet.SUBNET1_VPC1_TF1.id
-  private_ips = ["10.10.1.100"]
+# resource "aws_network_interface" "NI1_SUBNET1_VPC1_TF1" {
+#   subnet_id   = aws_subnet.SUBNET1_VPC1_TF1.id
+#   private_ips = ["10.10.1.100"]
 
-  tags = {
-    Name = "NI1_SUBNET1_VPC1_TF1"
-    Owner= "gopi.mukkapati@cloudeq.com"
-    Purpose = "Assaignment"
-  }
-}
+#   tags = {
+#     Name = "NI1_SUBNET1_VPC1_TF1"
+#     Owner= "gopi.mukkapati@cloudeq.com"
+#     Purpose = "Assaignment"
+#   }
+# }
 
 
 resource "aws_instance" "app_server" {
@@ -63,10 +63,10 @@ resource "aws_instance" "app_server" {
   instance_type = "t3.micro"
   key_name      = "anisble_key"
   associate_public_ip_address = "true"
-  network_interface {
-  network_interface_id = aws_network_interface.NI1_SUBNET1_VPC1_TF1.id
-  device_index         = 0
-  }
+# network_interface {
+#   network_interface_id = aws_network_interface.NI1_SUBNET1_VPC1_TF1.id
+#   device_index         = 0
+#   }
  
   credit_specification {
     cpu_credits = "unlimited"
